@@ -12,3 +12,6 @@
 
 # Python
 *.pyc
+
+# Vagrant
+.vagrant

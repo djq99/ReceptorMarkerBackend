@@ -76,7 +76,7 @@ def sub_install_Rserve():
     fi''')
     # Make Rserve working directory on local
     sudo('''cd /etc; if [ ! -f Rserv.conf ];
-    then mkdir -p /vagrant/Rserve ; \
+    then mkdir -p /vagrant/project/Rserve ; \
     fi''')
     # Add command to start Rserve on startup
     if not exists('/etc/Rserv.conf'):
