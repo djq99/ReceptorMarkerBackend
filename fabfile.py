@@ -42,7 +42,7 @@ def setup_vagrant():
     require('hosts', provided_by=[vagrant])  # Sets the environment for Fabric
     sub_add_repos()
     sub_install_packages()
-    sub_start_Rserve()
+    reload()  # Restarts the VM to initialize Rserve
 
 
 ### SUB-ROUTINES ###
@@ -101,3 +101,6 @@ def sub_Rserve_start_cmd():
     """Cannonical location of the startup command for Rserve."""
     return 'R CMD Rserve --vanilla --gui-none --no-save'
 
+def reload():
+    """Restart Vagrant VM with any new provisioning."""
+    local('vagrant reload --provision')
