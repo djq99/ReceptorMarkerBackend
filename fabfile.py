@@ -7,13 +7,14 @@ import subprocess, sys, os
 try:
     this_path = os.path.dirname(__file__)
     sys.path.append(os.path.join(this_path, '..', 'ReceptorMarkerDev'))
+    from fab_common_backend import *
     from rm_server_hosts import *
     from fabfile_backend import *
 except ImportError:
     pass
 
 ### VARIABLES ###
-
+# TODO: Duplicated elsewhere
 # Origin of the repository
 GIT_ORIGIN = 'git@github.com'
 GIT_REPO = 'nsh87/ReceptorMarkerBackend'
@@ -59,6 +60,7 @@ def setup_vagrant():
 
 def sub_add_repos():
     """Adds any repositories needed to install packages."""
+    # TODO: Duplicated elsewhere
     # Add the repository for R if it hasn't been added yet
     if not exists('/etc/apt/sources.list.d/cran.list', use_sudo=True):
         sudo('sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys '
@@ -68,6 +70,7 @@ def sub_add_repos():
 
 def sub_install_packages():
     """Installs the necessary packages to get Rserve up and running."""
+    # TODO: Duplicated elsewhere
     sudo('apt-get update')
     sudo('apt-get -y upgrade')
     package_str = ' '.join(INSTALL_PACKAGES)
@@ -90,6 +93,7 @@ def sub_make_virtualenv():
 def sub_install_Rserve():
     """Installs Rserve and configures it."""
     # Install Rserve
+    # TODO: Duplicated elsewhere
     sudo('mkdir -p /usr/src/Rserve')
     sudo('''cd /usr/src/Rserve; if [ ! -f Rserve_1.8-1.tar.gz ];
     then a='http://rforge.net/Rserve/snapshot/' ; \
@@ -122,10 +126,12 @@ def sub_start_Rserve():
 
 def sub_Rserve_start_cmd():
     """Cannonical location of the startup command for Rserve."""
+    # TODO: Duplicated elsewhere
     return 'R CMD Rserve --vanilla --gui-none --no-save'
 
 def reload():
     """Restart the server."""
+    # TODO: Duplicated elsewhere
     if env.settings in ('staging', 'production'):
         sudo('reboot')
     else:
