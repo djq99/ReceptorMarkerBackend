@@ -2,6 +2,16 @@ from fabric.api import run, sudo, env, require, settings, local, put
 from fabric.contrib.files import exists
 import subprocess, sys, os
 
+### DEVELOPER IMPORTS (PRIVILEGED ACCESS) ###
+
+try:
+    this_path = os.path.dirname(__file__)
+    sys.path.append(os.path.join(this_path, '..', 'ReceptorMarkerDev'))
+    from rm_server_hosts import *
+    from fabfile_backend import *
+except ImportError:
+    pass
+
 ### VARIABLES ###
 
 # Origin of the repository
@@ -13,7 +23,8 @@ GIT_REPO = 'nsh87/ReceptorMarkerBackend'
 #         is required by Rserve. $RHOME will be at /usr/lib/R.
 # r-base-dev: Allows installing  packages from source using install.packages()
 INSTALL_PACKAGES = ['r-base=3.1.2-1trusty0',
-                    'r-base-dev=3.1.2-1trusty0']
+                    'r-base-dev=3.1.2-1trusty0',
+                    'git-core']
 
 
 ### ENVIRONMENTS ###
@@ -23,17 +34,15 @@ def vagrant():
     development and server will use this environment.
     """
     # Configure SSH things
-    raw_ssh_config = subprocess.Popen(['vagrant', 'ssh-config'],
-                                      stdout=subprocess.PIPE).communicate()[0]
-    ssh_config = dict([l.strip().split() for l in raw_ssh_config.split("\n")
-                       if l])
+    raw_ssh_config = subprocess.Popen(['vagrant', 'ssh-config'], stdout=subprocess.PIPE).communicate()[0]
+    ssh_config = dict([l.strip().split() for l in raw_ssh_config.split("\n") if l])
     env.hosts = ['127.0.0.1:%s' % (ssh_config['Port'])]
     env.user = ssh_config['User']
     env.key_filename = ssh_config['IdentityFile']
-
-    # Development will happen in the master branch
-    env.repo = ('origin', 'master')
-
+    env.repo = ('env.example.com', 'origin', 'master')  # Develop in master branch
+    env.virtualenv, env.parent, env.branch = env.repo
+    env.base = '/server'
+    env.settings = 'vagrant'
 
 ### ROUTINES ###
 
@@ -42,6 +51,7 @@ def setup_vagrant():
     require('hosts', provided_by=[vagrant])  # Sets the environment for Fabric
     sub_add_repos()
     sub_install_packages()
+    # TODO: You should probably be using a virtualenv here
     reload()  # Restarts the VM to initialize Rserve
 
 
@@ -63,6 +73,19 @@ def sub_install_packages():
     package_str = ' '.join(INSTALL_PACKAGES)
     sudo('apt-get -y install ' + package_str)
     sub_install_Rserve()
+
+def sub_get_virtualenv():
+    """Fetches the virtualenv package."""
+    run("if [ ! -e virtualenv-1.11.6.tar.gz ]; then wget --no-check-certificate http://pypi.python.org/packages/source/v/virtualenv/virtualenv-1.11.6.tar.gz; fi")
+    run("if [ ! -d virtualenv-1.11.6 ]; then tar xzf virtualenv-1.11.6.tar.gz; fi")
+    run("rm -f virtualenv")
+    run("ln -s virtualenv-1.11.6 virtualenv")
+
+def sub_make_virtualenv():
+    """Makes the virtualenv."""
+    sudo("if [ ! -d %(base)s ]; then mkdir -p %(base)s; chmod 777 %(base)s; fi" % env)
+    run("if [ ! -d %(base)s/%(virtualenv)s ]; then python2.7 ~/virtualenv/virtualenv.py --no-site-packages %(base)s/%(virtualenv)s; fi" % env)
+    sudo("chmod 777 %(base)s/%(virtualenv)s" % env)
 
 def sub_install_Rserve():
     """Installs Rserve and configures it."""
@@ -102,5 +125,8 @@ def sub_Rserve_start_cmd():
     return 'R CMD Rserve --vanilla --gui-none --no-save'
 
 def reload():
-    """Restart Vagrant VM with any new provisioning."""
-    local('vagrant reload --provision')
+    """Restart the server."""
+    if env.settings in ('staging', 'production'):
+        sudo('reboot')
+    else:
+        local('vagrant reload --provision')
