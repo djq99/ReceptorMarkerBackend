@@ -7,7 +7,6 @@ import subprocess, sys, os
 try:
     this_path = os.path.dirname(__file__)
     sys.path.append(os.path.join(this_path, '..', 'ReceptorMarkerDev'))
-    from fab_common_backend import *
     from rm_server_hosts import *
     from fabfile_backend import *
 except ImportError:
