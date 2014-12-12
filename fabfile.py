@@ -99,6 +99,5 @@ def sub_start_Rserve():
 
 def sub_Rserve_start_cmd():
     """Cannonical location of the startup command for Rserve."""
-    # Start Rserver in debug mode - DO NOT DO THIS IN PRODUCTION
-    return 'R CMD Rserve.dbg --vanilla --gui-none --no-save --RS-settings --version'
+    return 'R CMD Rserve --vanilla --gui-none --no-save'
 
