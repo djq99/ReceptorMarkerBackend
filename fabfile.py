@@ -24,6 +24,8 @@ GIT_REPO = 'nsh87/ReceptorMarkerBackend'
 # r-base-dev: Allows installing  packages from source using install.packages()
 INSTALL_PACKAGES = ['r-base=3.1.2-1trusty0',
                     'r-base-dev=3.1.2-1trusty0',
+                    'libssl-dev',
+                    'libgeoip-dev',
                     'git-core']
 
 
@@ -43,6 +45,7 @@ def vagrant():
     env.virtualenv, env.parent, env.branch = env.repo
     env.base = '/server'
     env.settings = 'vagrant'
+    env.dev_mode = True
 
 ### ROUTINES ###
 
@@ -51,6 +54,8 @@ def setup_vagrant():
     require('hosts', provided_by=[vagrant])  # Sets the environment for Fabric
     sub_add_repos()
     sub_install_packages()
+    sub_build_packages()
+    sudo("usermod -aG vagrant www-data") # Ad www-data to the vagrant group
     # TODO: You should probably be using a virtualenv here
     reload()  # Restarts the VM to initialize Rserve
 
@@ -75,6 +80,60 @@ def sub_install_packages():
     package_str = ' '.join(INSTALL_PACKAGES)
     sudo('apt-get -y install ' + package_str)
     sub_install_Rserve()
+
+def sub_build_packages():
+    """Builds necessary packages."""
+    sub_build_nginx()
+
+def sub_build_nginx():
+    """Builds NginX to configure this server as a static media server for Django."""
+    sudo("mkdir -p /usr/src/nginx")
+    sudo("""cd /usr/src/nginx; if [ ! -e nginx-1.7.6.tar.gz ]; then
+         wget 'http://nginx.org/download/nginx-1.7.6.tar.gz' ; \
+         tar xfz nginx-1.7.6.tar.gz; \
+         cd nginx-1.7.6/; \
+         ./configure --pid-path=/var/run/nginx.pid \
+         --conf-path=/etc/nginx/nginx.conf \
+         --sbin-path=/usr/local/sbin \
+         --user=www-data \
+         --group=www-data \
+         --http-log-path=/var/log/nginx/access.log \
+         --error-log-path=/var/log/nginx/error.log \
+         --with-http_stub_status_module \
+         --with-http_ssl_module \
+         --with-http_realip_module \
+         --with-sha1-asm \
+         --with-sha1=/usr/lib \
+         --http-fastcgi-temp-path=/var/tmp/nginx/fcgi/ \
+         --http-proxy-temp-path=/var/tmp/nginx/proxy/ \
+         --http-client-body-temp-path=/var/tmp/nginx/client/ \
+         --with-http_geoip_module \
+         --with-http_gzip_static_module \
+         --with-http_sub_module \
+         --with-http_addition_module \
+         --with-file-aio \
+         --with-http_dav_module \
+         --without-mail_smtp_module; make ; make install;
+         fi
+         """)
+    sudo("mkdir -p /var/tmp/nginx; chown www-data /var/tmp/nginx")
+
+    put("config/nginx.conf","/etc/init/nginx.conf",use_sudo=True)
+    sudo("mkdir -p /server/www/media")
+    copy_nginx_config()
+
+def copy_nginx_config():
+    """Copies the NginX configuration file for serving static files to Django's app server."""
+    if env.dev_mode:
+        put("config/nginx/dev_nginx.conf", "/etc/nginx/nginx.conf", use_sudo=True)
+        put("config/nginx/dev_static_server.conf","/etc/nginx/static_server.conf", use_sudo=True)
+    else:
+        put("config/nginx/nginx.conf", "/etc/nginx/nginx.conf", use_sudo=True)
+        put("config/nginx/static_server.conf","/etc/nginx/static_server.conf", use_sudo=True)
+
+def sub_start_processes():
+    """Starts NginX."""
+    sudo("start nginx")
 
 def sub_get_virtualenv():
     """Fetches the virtualenv package."""
@@ -134,4 +193,4 @@ def reload():
     if env.settings in ('staging', 'production'):
         sudo('reboot')
     else:
-        local('vagrant reload --provision')
+        local('vagrant reload')
