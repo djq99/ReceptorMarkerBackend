@@ -26,7 +26,8 @@ INSTALL_PACKAGES = ['r-base=3.1.2-1trusty0',
                     'r-base-dev=3.1.2-1trusty0',
                     'libssl-dev',
                     'libgeoip-dev',
-                    'git-core']
+                    'git-core',
+                    'python-bs4']
 
 
 ### ENVIRONMENTS ###
@@ -57,6 +58,7 @@ def setup_vagrant():
     sub_build_packages()
     sudo("usermod -aG vagrant www-data") # Ad www-data to the vagrant group
     # TODO: You should probably be using a virtualenv here
+    sub_install_R_packages()
     reload()  # Restarts the VM to initialize Rserve
 
 
@@ -187,6 +189,28 @@ def sub_Rserve_start_cmd():
     # TODO: Duplicated elsewhere
     return 'R CMD Rserve --vanilla --gui-none --no-save'
 
+def sub_install_R_packages():
+    """Installs any packages required to run R scripts."""
+    sub_install_ape()
+    sub_install_muscle()
+    sub_install_seqinr()
+
+def sub_install_ape():
+    """Installs the package ape, a package for building phylogenies."""
+    sudo('R -e "install.packages(\'ape\', '
+         'repos=\'http://cran.rstudio.com/\')"')
+
+def sub_install_muscle():
+    """Installs the package muscle, for multiple sequence alignment."""
+    sudo('R -e "install.packages(\'muscle\', '
+         'repos=\'http://cran.rstudio.com/\')"')
+
+def sub_install_seqinr():
+    """Installs the seqinr package for reading and using DNA sequence
+    alignments. http://cran.r-project.org/web/packages/seqinr/seqinr.pdf.
+    """
+    sudo('R -e "install.packages(\'seqinr\', '
+         'repos=\'http://cran.rstudio.com/\')"')
 def reload():
     """Restart the server."""
     # TODO: Duplicated elsewhere
