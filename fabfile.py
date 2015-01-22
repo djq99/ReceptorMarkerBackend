@@ -206,6 +206,7 @@ def sub_install_seqinr():
     """
     sudo('R -e "install.packages(\'seqinr\', '
          'repos=\'http://cran.rstudio.com/\')"')
+
 def reload():
     """Restart the server."""
     # TODO: Duplicated elsewhere
