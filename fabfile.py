@@ -1,4 +1,4 @@
-from fabric.api import run, sudo, env, require, settings, local, put
+from fabric.api import run, sudo, env, require, settings, local, put, reboot
 from fabric.contrib.files import exists
 import subprocess, sys, os
 
@@ -176,6 +176,8 @@ def sub_install_Rserve():
 
 def sub_start_Rserve():
     """Starts the Rserve daemon."""
+    if env.settings in ('staging', 'production'):
+	    require('hosts', provided_by=[staging, production])
     start_cmd = sub_Rserve_start_cmd()
     run(start_cmd)
 
@@ -211,8 +213,10 @@ def reload():
     """Restart the server."""
     # TODO: Duplicated elsewhere
     if env.settings in ('staging', 'production'):
-        sudo('reboot')
-        sub_start_Rserve()
+	    require('hosts', provided_by=[staging, production])
+	    reboot(40)
+	    sub_start_Rserve()
     else:
-        local('vagrant reload')
-        sub_start_Rserve()
+	    require('hosts', provided_by=[vagrant])
+	    local('vagrant reload')
+	    sub_start_Rserve()
