@@ -165,11 +165,6 @@ def sub_install_Rserve():
     sudo('''cd /etc; if [ ! -f Rserv.conf ];
     then mkdir -p /vagrant/project/Rserve ; \
     fi''')
-    # Add command to start Rserve on startup
-    if not exists('/etc/Rserv.conf'):
-        add_to_startup = ''.join(["sed -i '14i ", sub_Rserve_start_cmd(),
-                                  "' /etc/rc.local"])
-        sudo(add_to_startup)
     # Configure Rserve: guid and uid are for 'vagrant' user; 33MB maximum file
     # transfer; no authentication since pyRserve doesn't support it right now;
     # enable remote connections from other machines; strings are encoded as
@@ -187,7 +182,7 @@ def sub_start_Rserve():
 def sub_Rserve_start_cmd():
     """Cannonical location of the startup command for Rserve."""
     # TODO: Duplicated elsewhere
-    return 'R CMD Rserve --vanilla --gui-none --no-save'
+    return 'R CMD Rserve --gui-none --no-save'
 
 def sub_install_R_packages():
     """Installs any packages required to run R scripts."""
@@ -216,5 +211,7 @@ def reload():
     # TODO: Duplicated elsewhere
     if env.settings in ('staging', 'production'):
         sudo('reboot')
+        sub_start_Rserve()
     else:
         local('vagrant reload')
+        sub_start_Rserve()
