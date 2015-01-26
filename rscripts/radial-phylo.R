@@ -1,3 +1,0 @@
-testfunc <- function(){
-  return('hello')
-}
