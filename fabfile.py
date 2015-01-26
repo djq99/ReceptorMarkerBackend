@@ -27,7 +27,9 @@ INSTALL_PACKAGES = ['r-base=3.1.2-1trusty0',
                     'libssl-dev',
                     'libgeoip-dev',
                     'git-core',
-                    'python-bs4']
+                    'python-bs4',
+                    'libcurl4-openssl-dev',
+                    'default-jre']
 
 
 ### ENVIRONMENTS ###
@@ -191,6 +193,7 @@ def sub_install_R_packages():
     sub_install_ape()
     sub_install_muscle()
     sub_install_seqinr()
+    sub_install_httr()
 
 def sub_install_ape():
     """Installs the package ape, a package for building phylogenies."""
@@ -207,6 +210,12 @@ def sub_install_seqinr():
     alignments. http://cran.r-project.org/web/packages/seqinr/seqinr.pdf.
     """
     sudo('R -e "install.packages(\'seqinr\', '
+         'repos=\'http://cran.rstudio.com/\')"')
+
+def sub_install_httr():
+	"""Installs the httr package that provides a wrapper for RCurl.
+	Mainly used for URL parsing and the like."""
+	sudo('R -e "install.packages(\'httr\', '
          'repos=\'http://cran.rstudio.com/\')"')
 
 def reload():
