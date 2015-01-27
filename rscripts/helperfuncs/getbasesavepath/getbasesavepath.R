@@ -36,4 +36,3 @@ getbasesavepath <- function(uri) {
     return('error: uri to file is malformed or not of expected format')
   }
 }
-}

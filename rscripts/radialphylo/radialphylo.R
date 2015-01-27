@@ -35,7 +35,10 @@ genradialphylo <- function(infile, seqscol){
   newickFile <- tempfile(pattern='tree-', tmpdir=getwd(), fileext='.newick')
   write.tree(phy=new_tree, file=newickFile)
   # Step 5: Use the Java script to convert the .newick to .xml
-  xmlFile <- tempfile(pattern='phyloxml-', tmpdir=getwd(), fileext='.xml')
+  usrfolder <- getbasesavepath(infile)
+  saveto <- paste0(usrfolder, 'radialphylo')
+  dir.create(saveto)
+  xmlFile <- tempfile(pattern='phyloxml-', tmpdir=saveto, fileext='.xml')
   system(sprintf("java -cp /server/rscripts/radialphylo/java/forester_1038.jar org.forester.application.phyloxml_converter -f=nn -ni %s %s", newickFile, xmlFile))
   # TODO: Allow user to select which column has the sequences rather than
   # requiring it to be named a certain way or in a certain column. Can
