@@ -93,10 +93,13 @@ def sub_build_nginx():
     """Builds NginX to configure this server as a static media server for Django."""
     sudo("mkdir -p /usr/src/nginx")
     sudo("""cd /usr/src/nginx; if [ ! -e nginx-1.7.6.tar.gz ]; then
+         wget 'https://github.com/openresty/headers-more-nginx-module/archive/v0.25.tar.gz' ; \
+         tar xfz v0.25.tar.gz; \
          wget 'http://nginx.org/download/nginx-1.7.6.tar.gz' ; \
          tar xfz nginx-1.7.6.tar.gz; \
          cd nginx-1.7.6/; \
          ./configure --pid-path=/var/run/nginx.pid \
+         --add-module=/usr/src/nginx/headers-more-nginx-module-0.25 \
          --conf-path=/etc/nginx/nginx.conf \
          --sbin-path=/usr/local/sbin \
          --user=www-data \

@@ -7,9 +7,6 @@ genradialphylo <- function(infile, seqscol){
   #     phyloxml: a .phyloxml file 
   absfile <- getabspath(infile)
   # Step 1: Write sequences to file as .fasta
-  ############### TESTING ################
-  seqscol <- 'clone'
-  # TODO: Need to get this input from Django
   ############# END TESTING ##############
   u <- read.csv(absfile)
   seqs <- u[u[, seqscol] != '', ]
@@ -52,5 +49,6 @@ genradialphylo <- function(infile, seqscol){
   # TODO: You need cleanup cronjob in linux to remove old temp files
   # generated below
   # Step 6: Send the .xml to jsPyhloSVG for plotting
-  return(xmlFile)
+  fileUrl <- geturl(xmlFile)
+  return(fileUrl)
 }
