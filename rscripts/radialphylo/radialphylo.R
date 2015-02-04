@@ -35,6 +35,7 @@ genradialphylo <- function(infile, seqscol){
   usrfolder <- getbasesavepath(infile)
   saveto <- paste0(usrfolder, 'radialphylo')
   dir.create(saveto)
+  # need to chmod, but this isn't working: system("chmod 771 %s", saveto). Folder is rwxrwxrwx
   xmlFile <- tempfile(pattern='phyloxml-', tmpdir=saveto, fileext='.xml')
   system(sprintf("java -cp /server/rscripts/radialphylo/java/forester_1038.jar org.forester.application.phyloxml_converter -f=nn -ni %s %s", newickFile, xmlFile))
   # TODO: Allow user to select which column has the sequences rather than
@@ -49,6 +50,7 @@ genradialphylo <- function(infile, seqscol){
   # TODO: You need cleanup cronjob in linux to remove old temp files
   # generated below
   # Step 6: Send the .xml to jsPyhloSVG for plotting
+  # Need to chmod, but this isn't working: system("chmod 664 %s", xmlFile). File is rw-rw-rw
   fileUrl <- geturl(xmlFile)
   return(fileUrl)
 }
