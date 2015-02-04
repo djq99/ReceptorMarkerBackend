@@ -176,8 +176,13 @@ def sub_install_Rserve():
     # utf8 before being sent to client and all strings received are assumed
     # to come as utf8; use specific port. Config file lives in config/Rserv.conf
     # on local.
-    local_conf = os.path.join(os.path.dirname(__file__), 'config', 'Rserv.conf')
-    put(local_conf, '/etc/', use_sudo=True, mirror_local_mode=True)
+    if env.settings == 'vagrant':
+	    local_conf = os.path.join(os.path.dirname(__file__), 'config', 'dev_Rserv.conf')
+	    put(local_conf, '/etc/Rserv.conf', use_sudo=True, mirror_local_mode=True)
+    else:
+        local_conf = os.path.join(os.path.dirname(__file__), 'config', 'Rserv.conf')
+        put(local_conf, '/etc/Rserv.conf', use_sudo=True, mirror_local_mode=True)
+        sudo("chown -R ubuntu:ubuntu /vagrant/project/Rserve")
 
 def sub_start_Rserve():
     """Starts the Rserve daemon."""
