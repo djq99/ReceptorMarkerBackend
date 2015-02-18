@@ -42,12 +42,13 @@ structure somewhere on your hard drive:
 VM's configuration comes from **Vagrantfile**.
 3. Your VM server doesn't have any packages installed on it. Run `fab
 vagrant setup_vagrant` to install the required packages. This could take 5-20
-mins depending on your computer and internet connection. Keep an eye out for
-warnings in case you need to debug. The only likely one you'll see is `System
-call failed: cannot allocate memory`, in which case you should first try to
-re-run the command once it's done doing it's thing, and if that doesn't work
-then edit **Vagrantfile** and change the 1536MB in the line `vb.customize
-["modifyvm", :id, "--memory", "1536"]` to something higher. 
+mins depending on the spped of your computer and internet connection.  
+
+Keep an eye out for warnings in case you need to debug. The only one you'll
+likely see is `System call failed: cannot allocate memory`. If you see this,
+first try to re-run the setup command once it's done doing its thing, and if
+that doesn't work then edit **Vagrantfile** and change the 1536MB in the line
+`vb.customize ["modifyvm", :id, "--memory", "1536"]` to something higher. 
 
 [vag]: https://www.vagrantup.com/downloads.html "VagrantUp Downloads"
 [vb]: https://www.virtualbox.org/wiki/Downloads "VirtualBox Downloads"
