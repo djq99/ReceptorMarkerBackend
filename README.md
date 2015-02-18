@@ -59,6 +59,7 @@ NumPy, and maybe some other cool things that the site leverages. The ability to
 execute R commands on the remote server is critical. You can test this by
 installing pyRserve (a Python client for Rserve) on your local computer, opening
 a Python shell, and connecting to the server:  
+
 ```python
 pip install pyRserve  
 python  
@@ -83,21 +84,21 @@ the [pyRserve][pyr] manual for more information on this topic.
 
 Next Steps
 ==========
-Once the analytical server running properly, head over to the
+Once the analytical server running properly, head over to
 [ReceptorMarkerFrontend][rmf] to get the repo for the frontend server. That repo
 contains all the webserver and Django files and the components for the site's
 user interface.
 
-[rmf]: https://github.com/nsh87/ReceptorMarkerFrontend "ReceptorMarkerFrontend -
-GitHub"
+[rmf]: https://github.com/nsh87/ReceptorMarkerFrontend "ReceptorMarkerFrontend"
 
 Commands Guide
 ==============
-`vagrant up` = boot the VM
-`vagrant halt` = shutdown the VM
-`fab vagrant setup_vagrant` = install any new packages to the VM
+`vagrant up` = boot the VM  
+`vagrant halt` = shutdown the VM  
+`fab vagrant setup_vagrant` = install any new packages to the VM  
 
 Contributing
 ============
-More information to come. This section will contain information about where R
-scripts should live and how to have the frontend call the scripts.
+More information to come. This section will contain instructions on where to put
+new R scripts, how to access user-uploaded files, and how to get the frontend to
+call R scripts on this server.
