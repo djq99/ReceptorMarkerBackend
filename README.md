@@ -56,22 +56,24 @@ that doesn't work then edit **Vagrantfile** and change the 1536MB in the line
 ## Verifying the install
 You should now have an Ubuntu Server running R (via [Rserve][rs]), Python with
 NumPy, and maybe some other cool things that the site leverages. The ability to
-execute R commands on the remote server is critical. You test this by installing
-pyRserve (a Python client for Rserve), opening a Python shell, and connecting to
-the server:  
-> pip install pyRserve  
-> python  
-> ``>>>`` import pyRserve    
-> ``>>>`` conn = pyRserve.connect(host='66.66.66.10')  
-> ``>>>`` conn  
-> ``<``Handle to Rserve on 66.66.66.10:6311``>``  
-> ``#`` evaluate something in R  
-> ``>>>`` conn.eval("2+2")  
-> 4.0  
-> ``#`` list loaded R packages  
-> ``>>>`` conn.eval("libraries()")  
-> array(['httr', 'ape', 'muscle', 'seqinr', 'ade4', 'stats', 'graphics',
-> 'grDevices', 'utils', 'datasets', 'methods', 'base'], dtype='S9')
+execute R commands on the remote server is critical. You can test this by
+installing pyRserve (a Python client for Rserve) on your local computer, opening
+a Python shell, and connecting to the server:  
+```python
+pip install pyRserve  
+python  
+>>> import pyRserve    
+>>> conn = pyRserve.connect(host='66.66.66.10')  
+>>> conn  
+<Handle to Rserve on 66.66.66.10:6311>  
+# evaluate something in R  
+>>> conn.eval("2+2")  
+4.0  
+# list loaded R packages  
+>>> conn.eval("libraries()")  
+array(['httr', 'ape', 'muscle', 'seqinr', 'ade4', 'stats', 'graphics',
+'grDevices', 'utils', 'datasets', 'methods', 'base'], dtype='S9')
+```
 
 Notice that what you are getting back from the call to R is a NumPy array. See
 the [pyRserve][pyr] manual for more information on this topic.
