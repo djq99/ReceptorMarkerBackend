@@ -30,7 +30,7 @@ name. Within that folder, clone this repo. So you should end up with this folder
 structure somewhere on your hard drive:    
 
 |-- *receptormarker*  
-| &nbsp;
+| &nbsp;&nbsp;
     |-- *ReceptorMarkerBackend*  
 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         |-- a bunch of files and folders from this repo
