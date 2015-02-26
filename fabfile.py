@@ -61,7 +61,7 @@ def setup_vagrant():
     sudo("usermod -aG vagrant www-data") # Ad www-data to the vagrant group
     # TODO: You should probably be using a virtualenv here
     sub_install_R_packages()
-    reload()  # Restarts the VM to initialize Rserve
+    reload()
 
 
 ### SUB-ROUTINES ###
@@ -177,34 +177,33 @@ def sub_install_Rserve():
     # to come as utf8; use specific port. Config file lives in config/Rserv.conf
     # on local.
     if env.settings == 'vagrant':
-	    local_conf = os.path.join(os.path.dirname(__file__), 'config', 'dev_Rserv.conf')
-	    put(local_conf, '/etc/Rserv.conf', use_sudo=True, mirror_local_mode=True)
+        local_conf = os.path.join(os.path.dirname(__file__), 'config', 'dev_Rserv.conf')
+        put(local_conf, '/etc/Rserv.conf', use_sudo=True, mirror_local_mode=True)
+        # Add Upstart job, one for Vagrant, one for EC2
+        put('config/upstart_rserve_dev.conf', '/etc/init/rserve.conf',
+            use_sudo=True)
     else:
         local_conf = os.path.join(os.path.dirname(__file__), 'config', 'Rserv.conf')
         put(local_conf, '/etc/Rserv.conf', use_sudo=True, mirror_local_mode=True)
-        sudo("chown -R ubuntu:ubuntu /vagrant/project/Rserve")
-    # Add command to start Rserve on startup (running it as root will let it
-    # read the guid and uid Rserve.conf and switch to that user). -> Not loading
-    # R scripts through this method:
-    #if not exists('/etc/Rserv.conf'):
-    #    add_to_startup = ''.join(["sed -i '14i ", sub_Rserve_start_cmd(),
-    #                              "' /etc/rc.local"])
-    #    sudo(add_to_startup)
+        sudo("chown -R www-data:www-data /vagrant/project/Rserve")
+        # Add Upstart job, one for Vagrant, one for EC2
+        put('config/upstart_rserve.conf', '/etc/init/rserve.conf', use_sudo=True)
 
 def sub_start_Rserve():
     """Starts the Rserve daemon."""
     if env.settings in ('staging', 'production'):
-	    require('hosts', provided_by=[staging, production])
+        require('hosts', provided_by=[staging, production])
     start_cmd = sub_Rserve_start_cmd()
     run(start_cmd)
 
 def sub_Rserve_start_cmd():
     """Cannonical location of the startup command for Rserve."""
     # TODO: Duplicated elsewhere
-    if env.settings == 'staging' or env.settings == 'production':
-        return 'sudo R CMD Rserve --gui-none --no-save'
-    else:
-        return 'R CMD Rserve --gui-none --no-save'
+    return 'sudo service rserve start'
+    #if env.settings == 'staging' or env.settings == 'production':
+    #    return 'sudo R CMD Rserve --gui-none --no-save'
+    #else:
+    #    return 'R CMD Rserve --gui-none --no-save'
 
 def sub_install_R_packages():
     """Installs any packages required to run R scripts."""
@@ -231,19 +230,17 @@ def sub_install_seqinr():
          'repos=\'http://cran.rstudio.com/\')"')
 
 def sub_install_httr():
-	"""Installs the httr package that provides a wrapper for RCurl.
-	Mainly used for URL parsing and the like."""
-	sudo('R -e "install.packages(\'httr\', '
+    """Installs the httr package that provides a wrapper for RCurl.
+    Mainly used for URL parsing and the like."""
+    sudo('R -e "install.packages(\'httr\', '
          'repos=\'http://cran.rstudio.com/\')"')
 
 def reload():
     """Restart the server."""
     # TODO: Duplicated elsewhere
     if env.settings in ('staging', 'production'):
-	    require('hosts', provided_by=[staging, production])
-	    reboot(40)
-	    sub_start_Rserve()
+        require('hosts', provided_by=[staging, production])
+        reboot(40)
     else:
-	    require('hosts', provided_by=[vagrant])
-	    local('vagrant reload')
-	    sub_start_Rserve()
+        require('hosts', provided_by=[vagrant])
+        local('vagrant reload')
