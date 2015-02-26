@@ -183,6 +183,13 @@ def sub_install_Rserve():
         local_conf = os.path.join(os.path.dirname(__file__), 'config', 'Rserv.conf')
         put(local_conf, '/etc/Rserv.conf', use_sudo=True, mirror_local_mode=True)
         sudo("chown -R ubuntu:ubuntu /vagrant/project/Rserve")
+    # Add command to start Rserve on startup (running it as root will let it
+    # read the guid and uid Rserve.conf and switch to that user). -> Not loading
+    # R scripts through this method:
+    #if not exists('/etc/Rserv.conf'):
+    #    add_to_startup = ''.join(["sed -i '14i ", sub_Rserve_start_cmd(),
+    #                              "' /etc/rc.local"])
+    #    sudo(add_to_startup)
 
 def sub_start_Rserve():
     """Starts the Rserve daemon."""
