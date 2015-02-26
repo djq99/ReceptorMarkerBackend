@@ -21,6 +21,25 @@ repository concise for newcomers.
 
 Installation
 ============
+System Requirements: 2GB RAM Min. and 3GB Free HD Space
+
+Install the following:
+
+  * VirtualBox: https://www.virtualbox.org/wiki/Downloads
+  * Vagrant: https://www.vagrantup.com/downloads
+  * Fabric: http://www.fabfile.org/installing.html
+
+It is likely that you already have Python, which Fabric requires. If you are
+unsure, open Terminal and run `python`.
+
+You also need to have an SSH key, since it will be used when setting up your VM
+with Vagrant. See the GitHub instructions for [checking for and creating an SSH
+key][ghssh]. You do not need to go through Step 3 and 4 in their instructions.
+If you find a key named `id_rsa` in Step 1 then you can skip everything - you
+already have an SSH key.
+
+[ghssh]: https://help.github.com/articles/generating-ssh-keys/
+
 The analytical server that this repo creates is only half of the ReceptorMarker
 site. There is another repo that we will need to use later to bring up a
 frontend. No need to worry about it now, but with that in mind you should first
