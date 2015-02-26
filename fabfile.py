@@ -194,7 +194,10 @@ def sub_start_Rserve():
 def sub_Rserve_start_cmd():
     """Cannonical location of the startup command for Rserve."""
     # TODO: Duplicated elsewhere
-    return 'R CMD Rserve --gui-none --no-save'
+    if env.settings == 'staging' or env.settings == 'production':
+        return 'sudo R CMD Rserve --gui-none --no-save'
+    else:
+        return 'R CMD Rserve --gui-none --no-save'
 
 def sub_install_R_packages():
     """Installs any packages required to run R scripts."""
