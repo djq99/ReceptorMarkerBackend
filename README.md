@@ -101,6 +101,12 @@ the [pyRserve][pyr] manual for more information on this topic.
 [rs]: http://www.rforge.net/Rserve/ "Rserve - TCP/IP server for R"
 [pyr]: http://pythonhosted.org//pyRserve/ "pyRserve Documentation"
 
+Commands Guide
+==============
+`vagrant up` = boot the VM  
+`vagrant halt` = shutdown the VM  
+`fab vagrant setup_vagrant` = install any new packages to the VM  
+
 Next Steps
 ==========
 Once the analytical server running properly, head over to
@@ -109,12 +115,6 @@ contains all the webserver and Django files and the components for the site's
 user interface.
 
 [rmf]: https://github.com/nsh87/ReceptorMarkerFrontend "ReceptorMarkerFrontend"
-
-Commands Guide
-==============
-`vagrant up` = boot the VM  
-`vagrant halt` = shutdown the VM  
-`fab vagrant setup_vagrant` = install any new packages to the VM  
 
 Contributing
 ============
@@ -128,6 +128,9 @@ information about other files and folders in the VMs. Some useful links:
   the backend server, connecting a Django app to an Rscript
 * [Local Development][ld] - general info about local development, common
   commands
+
+If you are going to do develop any analyses for ReceptorMarker, you should check
+out the Wiki.
 
 [bas]: https://github.com/nsh87/ReceptorMarkerFrontend/wiki/Backend-(Analytical)-Server
 [raa]: https://github.com/nsh87/ReceptorMarkerFrontend/wiki/Running-an-Analysis-on-the-Analytical-Server
