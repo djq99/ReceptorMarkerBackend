@@ -119,7 +119,7 @@ user interface.
 Contributing
 ============
 The ReceptorMarkerFrontend Wiki is the canonical location for documentation
-about contribution, local development, accessing user-uploaded files, and
+about contributing, local development, accessing user-uploaded files, and
 information about other files and folders in the VMs. Some useful links:
 
 * [Backend (Analytical) Server][bas] - contains info about the
@@ -129,7 +129,7 @@ information about other files and folders in the VMs. Some useful links:
 * [Local Development][ld] - general info about local development, common
   commands
 
-If you are going to do develop any analyses for ReceptorMarker, you should check
+If you are going to do develop any analyses for ReceptorMarker you should check
 out the Wiki.
 
 [bas]: https://github.com/nsh87/ReceptorMarkerFrontend/wiki/Backend-(Analytical)-Server
