@@ -80,17 +80,18 @@ installing pyRserve (a Python client for Rserve) on your local computer, opening
 a Python shell, and connecting to the server:  
 
 ```python
-pip install pyRserve  
-python  
->>> import pyRserve    
->>> conn = pyRserve.connect(host='66.66.66.10')  
->>> conn  
-<Handle to Rserve on 66.66.66.10:6311>  
-# evaluate something in R  
->>> conn.eval("2+2")  
-4.0  
-# list loaded R packages  
->>> conn.eval("libraries()")  
+pip install pyRserve  # Install pyRserve if it is not installed yet
+python  # Start the Python shell
+>>> import pyRserve
+>>> conn = pyRserve.connect(host='66.66.66.10')  # Attempt the connection to
+>>> Rserve at the VM's IP
+>>> conn
+<Handle to Rserve on 66.66.66.10:6311>
+# evaluate something in R
+>>> conn.eval("2+2")
+4.0
+# list loaded R packages
+>>> conn.eval("libraries()")
 array(['httr', 'ape', 'muscle', 'seqinr', 'ade4', 'stats', 'graphics',
 'grDevices', 'utils', 'datasets', 'methods', 'base'], dtype='S9')
 ```
