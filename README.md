@@ -66,9 +66,10 @@ mins depending on the speed of your computer and internet connection.
 
 Keep an eye out for warnings in case you need to debug. The only one you'll
 likely see is `System call failed: cannot allocate memory`. If you see this,
-first try to re-run the setup command once it's done doing its thing, and if
-that doesn't work then edit **Vagrantfile** and change the 1536MB in the line
-`vb.customize ["modifyvm", :id, "--memory", "1536"]` to something higher. 
+first try to re-run the setup command (`fab vagrant setup_vagrant`) once it's
+done doing its thing, and if that doesn't work then edit **Vagrantfile** and
+change the 1536MB in the line `vb.customize ["modifyvm", :id, "--memory",
+"1536"]` to something higher. 
 
 [vag]: https://www.vagrantup.com/downloads.html "VagrantUp Downloads"
 [vb]: https://www.virtualbox.org/wiki/Downloads "VirtualBox Downloads"
