@@ -55,13 +55,14 @@ structure somewhere on your hard drive:
         |-- a bunch of files and folders from this repo
 
 1. You just performed this step: clone the repo.  
-2. Install [Vagrant][vag], [VirtualBox][vb], and [Fabric][fb].
+2. Install [Vagrant][vag], [VirtualBox][vb], and [Fabric][fb] if you have not
+   done so already.
 2. `cd` into *ReceptorMarkerBackend* and run `vagrant up`. This will boot up a
    VM that runs Ubuntu Server. It will live at local IP address 66.66.66.10. The
 VM's configuration comes from **Vagrantfile**.
 3. Your VM server doesn't have any packages installed on it. Run `fab
 vagrant setup_vagrant` to install the required packages. This could take 5-20
-mins depending on the spped of your computer and internet connection.  
+mins depending on the speed of your computer and internet connection.  
 
 Keep an eye out for warnings in case you need to debug. The only one you'll
 likely see is `System call failed: cannot allocate memory`. If you see this,
