@@ -132,8 +132,8 @@ information about other files and folders in the VMs. Some useful links:
 * [Local Development][ld] - general info about local development, common
   commands
 
-If you are going to do develop any analyses for ReceptorMarker you should check
-out the Wiki.
+If you are going to develop any analyses for ReceptorMarker you should check
+out the Wiki links above.
 
 [bas]: https://github.com/nsh87/ReceptorMarkerFrontend/wiki/Backend-(Analytical)-Server
 [raa]: https://github.com/nsh87/ReceptorMarkerFrontend/wiki/Running-an-Analysis-on-the-Analytical-Server
