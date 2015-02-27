@@ -81,26 +81,33 @@ installing pyRserve (a Python client for Rserve) on your local computer, opening
 a Python shell, and connecting to the server:  
 
 ```python
-pip install pyRserve  
-python  
->>> import pyRserve    
->>> conn = pyRserve.connect(host='66.66.66.10')  
->>> conn  
-<Handle to Rserve on 66.66.66.10:6311>  
-# evaluate something in R  
->>> conn.eval("2+2")  
-4.0  
-# list loaded R packages  
->>> conn.eval("libraries()")  
+pip install pyRserve  # Install pyRserve if it is not installed yet
+python  # Start the Python shell
+>>> import pyRserve
+>>> conn = pyRserve.connect(host='66.66.66.10')  # Attempt connection to Rserve
+>>> Rserve at the VM's IP
+>>> conn
+<Handle to Rserve on 66.66.66.10:6311>
+# evaluate something in R
+>>> conn.eval("2+2")
+4.0
+# list loaded R packages
+>>> conn.eval("libraries()")
 array(['httr', 'ape', 'muscle', 'seqinr', 'ade4', 'stats', 'graphics',
 'grDevices', 'utils', 'datasets', 'methods', 'base'], dtype='S9')
 ```
 
-Notice that what you are getting back from the call to R is a NumPy array. See
-the [pyRserve][pyr] manual for more information on this topic.
+Notice that what you are getting back from the call to Rserve is a NumPy array.
+See the [pyRserve][pyr] manual for more information on this topic.
 
 [rs]: http://www.rforge.net/Rserve/ "Rserve - TCP/IP server for R"
 [pyr]: http://pythonhosted.org//pyRserve/ "pyRserve Documentation"
+
+Commands Guide
+==============
+`vagrant up` = boot the VM  
+`vagrant halt` = shutdown the VM  
+`fab vagrant setup_vagrant` = install any new packages to the VM  
 
 Next Steps
 ==========
@@ -111,14 +118,22 @@ user interface.
 
 [rmf]: https://github.com/nsh87/ReceptorMarkerFrontend "ReceptorMarkerFrontend"
 
-Commands Guide
-==============
-`vagrant up` = boot the VM  
-`vagrant halt` = shutdown the VM  
-`fab vagrant setup_vagrant` = install any new packages to the VM  
-
 Contributing
 ============
-More information to come. This section will contain instructions on where to put
-new R scripts, how to access user-uploaded files, and how to get the frontend to
-call R scripts on this server.
+The ReceptorMarkerFrontend Wiki is the canonical location for documentation
+about contributing, local development, accessing user-uploaded files, and
+information about other files and folders in the VMs. Some useful links:
+
+* [Backend (Analytical) Server][bas] - contains info about the
+  using ReceptorMarkerBackend VM for development purposes 
+* [Running an Analysis on the Analytical Server][raa] - info about connecting to
+  the backend server, connecting a Django app to an Rscript
+* [Local Development][ld] - general info about local development, common
+  commands
+
+If you are going to do develop any analyses for ReceptorMarker you should check
+out the Wiki.
+
+[bas]: https://github.com/nsh87/ReceptorMarkerFrontend/wiki/Backend-(Analytical)-Server
+[raa]: https://github.com/nsh87/ReceptorMarkerFrontend/wiki/Running-an-Analysis-on-the-Analytical-Server
+[ld]: https://github.com/nsh87/ReceptorMarkerFrontend/wiki/Local-Development
