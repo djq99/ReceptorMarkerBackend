@@ -55,7 +55,7 @@ structure somewhere on your hard drive:
         |-- a bunch of files and folders from this repo
 
 1. You just performed this step: clone the repo.  
-2. Install [Vagrant][vag] and [VirtualBox][vb].
+2. Install [Vagrant][vag], [VirtualBox][vb], and [Fabric][fb]
 2. `cd` into *ReceptorMarkerBackend* and run `vagrant up`. This will boot up a
    VM that runs Ubuntu Server. It will live at local IP address 66.66.66.10. The
 VM's configuration comes from **Vagrantfile**.
@@ -71,6 +71,7 @@ that doesn't work then edit **Vagrantfile** and change the 1536MB in the line
 
 [vag]: https://www.vagrantup.com/downloads.html "VagrantUp Downloads"
 [vb]: https://www.virtualbox.org/wiki/Downloads "VirtualBox Downloads"
+[fb]: http://www.fabfile.org/installing.html
 
 ## Verifying the install
 You should now have an Ubuntu Server running R (via [Rserve][rs]), Python with
