@@ -118,6 +118,17 @@ Commands Guide
 
 Contributing
 ============
-More information to come. This section will contain instructions on where to put
-new R scripts, how to access user-uploaded files, and how to get the frontend to
-call R scripts on this server.
+The ReceptorMarkerFrontend Wiki is the canonical location for documentation
+about contribution, local development, accessing user-uploaded files, and
+information about other files and folders in the VMs. Some useful links:
+
+* [Backend (Analytical) Server][bas] - contains info about the
+  using ReceptorMarkerBackend VM for development purposes 
+* [Running an Analysis on the Analytical Server][raa] - info about connecting to
+  the backend server, connecting a Django app to an Rscript
+* [Local Development][ld] - general info about local development, common
+  commands
+
+[bas]: https://github.com/nsh87/ReceptorMarkerFrontend/wiki/Backend-(Analytical)-Server
+[raa]: https://github.com/nsh87/ReceptorMarkerFrontend/wiki/Running-an-Analysis-on-the-Analytical-Server
+[ld]: https://github.com/nsh87/ReceptorMarkerFrontend/wiki/Local-Development
