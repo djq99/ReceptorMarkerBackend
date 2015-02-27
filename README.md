@@ -83,7 +83,7 @@ a Python shell, and connecting to the server:
 pip install pyRserve  # Install pyRserve if it is not installed yet
 python  # Start the Python shell
 >>> import pyRserve
->>> conn = pyRserve.connect(host='66.66.66.10')  # Attempt the connection to
+>>> conn = pyRserve.connect(host='66.66.66.10')  # Attempt connection to Rserve
 >>> Rserve at the VM's IP
 >>> conn
 <Handle to Rserve on 66.66.66.10:6311>
