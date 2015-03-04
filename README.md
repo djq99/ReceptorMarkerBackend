@@ -93,18 +93,13 @@ python  # Start the Python shell
 # evaluate something in R
 >>> conn.eval("2+2")
 4.0
-# list loaded R objects (this list might change over time)
->>> conn.eval("objects()")
-array(['genradialphylo', 'getabspath', 'getbasesavepath', 'geturl'], 
-dtype='|S15')
-# list loaded r pacakges (this list might change over time)
+# list loaded r pacakges
 >>> conn.eval(".packages()")
 array(['httr', 'ape', 'muscle', 'seqinr', 'ade4', 'stats', 'graphics',
-'grDevices', 'utils', 'datasets', 'methods', 'base'],
-dtype='|S9')
+'grDevices', 'utils', 'datasets', 'methods', 'base'], dtype='|S9')
 ```
 
-Notice that what you are getting back from the calls to Rserve is a NumPy array.
+Notice that what you are getting back from the call to Rserve is a NumPy array.
 See the [pyRserve][pyr] manual for more information on this topic.
 
 [rs]: http://www.rforge.net/Rserve/ "Rserve - TCP/IP server for R"
