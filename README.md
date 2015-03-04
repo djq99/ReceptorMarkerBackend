@@ -30,8 +30,8 @@ Install the following:
   * Fabric: http://www.fabfile.org/installing.html
 
 It is likely that you already have Python, which Fabric requires. If you are
-unsure, open Terminal and run `python`. If using Windows you might need to
-enable VM support in you BIOS.
+unsure, open Terminal and run `python`. If using Windows you might also need to
+enable VM support in you BIOS for Vagrant to work properly.
 
 You also need to have an SSH key, since it will be used when setting up your VM
 with Vagrant. See the GitHub instructions for [checking for and creating an SSH
