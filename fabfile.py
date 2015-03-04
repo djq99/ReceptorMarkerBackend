@@ -40,7 +40,8 @@ def vagrant():
     """
     # Configure SSH things
     raw_ssh_config = subprocess.Popen(['vagrant', 'ssh-config'], stdout=subprocess.PIPE).communicate()[0]
-    ssh_config = dict([l.strip().split() for l in raw_ssh_config.split("\n") if l])
+    ssh_config_list = [l.strip().split() for l in raw_ssh_config.split("\n") if l]
+    ssh_config = dict([x for x in ssh_config_list if x != []])
     env.hosts = ['127.0.0.1:%s' % (ssh_config['Port'])]
     env.user = ssh_config['User']
     env.key_filename = ssh_config['IdentityFile']
