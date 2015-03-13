@@ -83,7 +83,7 @@ def sub_install_packages():
     sudo('apt-get update')
     sudo('apt-get -y upgrade')
     package_str = ' '.join(INSTALL_PACKAGES)
-    sudo('apt-get -y install ' + package_str)
+    sudo('apt-get --force-yes install ' + package_str)
     sub_install_Rserve()
 
 def sub_build_packages():
