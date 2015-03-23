@@ -22,8 +22,9 @@ GIT_REPO = 'nsh87/ReceptorMarkerBackend'
 # r-base: R's core components, should get installed with --enable-R-shlib, which
 #         is required by Rserve. $RHOME will be at /usr/lib/R.
 # r-base-dev: Allows installing  packages from source using install.packages()
-INSTALL_PACKAGES = ['r-base=3.1.3-1trusty0',
-                    'r-base-dev=3.1.3-1trusty0',
+INSTALL_PACKAGES = ['r-recommended=3.1.2-1trusty0',
+                    'r-base=3.1.2-1trusty0',
+                    'r-base-dev=3.1.2-1trusty0',
                     'libssl-dev',
                     'libgeoip-dev',
                     'git-core',
