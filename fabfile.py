@@ -30,7 +30,10 @@ INSTALL_PACKAGES = ['r-recommended=3.1.2-1trusty0',
                     'git-core',
                     'python-bs4',
                     'libcurl4-openssl-dev',
-                    'default-jre']
+                    'default-jre',
+                    'libssl-dev',
+                    'libxml2-dev',
+                    'curl']
 
 
 ### ENVIRONMENTS ###
@@ -213,6 +216,7 @@ def sub_install_R_packages():
     sub_install_muscle()
     sub_install_seqinr()
     sub_install_httr()
+    sub_install_devtools()
 
 def sub_install_ape():
     """Installs the package ape, a package for building phylogenies."""
@@ -235,6 +239,12 @@ def sub_install_httr():
     """Installs the httr package that provides a wrapper for RCurl.
     Mainly used for URL parsing and the like."""
     sudo('R -e "install.packages(\'httr\', '
+         'repos=\'http://cran.rstudio.com/\')"')
+
+def sub_install_devtools():
+    """Installs the devtools package that allows for installing packages from
+    Github. Will be used to install the 'receptormarker' package."""
+    sudo('R -e "install.packages(\'devtools\', '
          'repos=\'http://cran.rstudio.com/\')"')
 
 def reload():
