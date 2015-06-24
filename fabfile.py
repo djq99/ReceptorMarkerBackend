@@ -33,7 +33,8 @@ INSTALL_PACKAGES = ['r-recommended=3.1.2-1trusty0',
                     'default-jre',
                     'libssl-dev',
                     'libxml2-dev',
-                    'curl']
+                    'curl',
+                    'python-numpy']
 
 
 ### ENVIRONMENTS ###
