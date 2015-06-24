@@ -34,7 +34,9 @@ INSTALL_PACKAGES = ['r-recommended=3.1.2-1trusty0',
                     'libssl-dev',
                     'libxml2-dev',
                     'curl',
-                    'python-numpy']
+                    'python-numpy',
+                    'python-setuptools',
+                    'python-dev']
 
 
 ### ENVIRONMENTS ###
@@ -90,6 +92,7 @@ def sub_install_packages():
     package_str = ' '.join(INSTALL_PACKAGES)
     sudo('apt-get --force-yes install ' + package_str)
     sub_install_Rserve()
+    sub_install_Biopython()
 
 def sub_build_packages():
     """Builds necessary packages."""
@@ -194,6 +197,10 @@ def sub_install_Rserve():
         sudo("chown -R www-data:www-data /vagrant/project/Rserve")
         # Add Upstart job, one for Vagrant, one for EC2
         put('config/upstart_rserve.conf', '/etc/init/rserve.conf', use_sudo=True)
+
+def sub_install_Biopython():
+    """Installs Biopython."""
+    sudo("easy_install -f http://biopython.org/DIST/ biopython")
 
 def sub_start_Rserve():
     """Starts the Rserve daemon."""
