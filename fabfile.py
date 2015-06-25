@@ -221,7 +221,6 @@ def sub_Rserve_start_cmd():
 def sub_install_R_packages():
     """Installs any packages required to run R scripts."""
     sub_install_ape()
-    sub_install_muscle()
     sub_install_seqinr()
     sub_install_httr()
     sub_install_devtools()
