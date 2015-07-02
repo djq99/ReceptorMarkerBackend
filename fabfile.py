@@ -224,15 +224,16 @@ def sub_install_R_packages():
     sub_install_seqinr()
     sub_install_httr()
     sub_install_devtools()
+    sub_uninstall_old_muscle()
+
+
+def sub_uninstall_old_muscle():
+    sudo('rm -rf /usr/local/lib/R/site-library/muscle')
+
 
 def sub_install_ape():
     """Installs the package ape, a package for building phylogenies."""
     sudo('R -e "install.packages(\'ape\', '
-         'repos=\'http://cran.rstudio.com/\')"')
-
-def sub_install_muscle():
-    """Installs the package muscle, for multiple sequence alignment."""
-    sudo('R -e "install.packages(\'muscle\', '
          'repos=\'http://cran.rstudio.com/\')"')
 
 def sub_install_seqinr():
