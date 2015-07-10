@@ -224,6 +224,8 @@ def sub_install_R_packages():
     sub_install_seqinr()
     sub_install_httr()
     sub_install_devtools()
+    sub_install_rsqlite()
+    sub_install_jsonlite()
     sub_uninstall_old_muscle()
 
 
@@ -253,6 +255,16 @@ def sub_install_devtools():
     """Installs the devtools package that allows for installing packages from
     Github. Will be used to install the 'receptormarker' package."""
     sudo('R -e "install.packages(\'devtools\', '
+         'repos=\'http://cran.rstudio.com/\')"')
+
+def sub_install_rsqlite():
+    """Installs SQLite for reading and writing SQLite files."""
+    sudo('R -e "install.packages(\'RSQLite\', '
+         'repos=\'http://cran.rstudio.com/\')"')
+
+def sub_install_jsonlite():
+    """Installs SQLite for reading and writing SQLite files."""
+    sudo('R -e "install.packages(\'jsonlite\', '
          'repos=\'http://cran.rstudio.com/\')"')
 
 def reload():
