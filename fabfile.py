@@ -92,9 +92,12 @@ def sub_add_repos():
 def ssh():
     """SSH into a given environment"""
     require('hosts', provided_by=[staging, production])
-    cmd = "ssh -i {0} {1}@{2}".format(env['pem'], 'hi', 'hi')
-    print cmd
-    local("ssh -i %(pem)s %(user)s@%(hosts)s" % env)
+    cmd = "ssh -i {0} {1}@{2}".format(
+             env.key_filename,
+             env.user,
+             env.hosts[0]
+    )
+    local(cmd)
 
 def sub_install_packages():
     """Installs the necessary packages to get Rserve up and running."""
