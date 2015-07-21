@@ -89,6 +89,13 @@ def sub_add_repos():
         run('sudo sh -c "echo \'deb http://cran.rstudio.com/bin/linux/ubuntu '
             'trusty/\' >> /etc/apt/sources.list.d/cran.list"')
 
+def ssh():
+    """SSH into a given environment"""
+    require('hosts', provided_by=[staging, production])
+    cmd = "ssh -i {0} {1}@{2}".format(env['pem'], 'hi', 'hi')
+    print cmd
+    local("ssh -i %(pem)s %(user)s@%(hosts)s" % env)
+
 def sub_install_packages():
     """Installs the necessary packages to get Rserve up and running."""
     # TODO: Duplicated elsewhere
@@ -150,7 +157,10 @@ def copy_nginx_config():
         put("config/nginx/dev_static_server.conf","/etc/nginx/static_server.conf", use_sudo=True)
     else:
         put("config/nginx/nginx.conf", "/etc/nginx/nginx.conf", use_sudo=True)
-        put("config/nginx/static_server.conf","/etc/nginx/static_server.conf", use_sudo=True)
+        if env.settings == 'production':
+            put("config/nginx/static_server.conf","/etc/nginx/static_server.conf", use_sudo=True)
+        else:
+            put("config/nginx/stage_static_server.conf","/etc/nginx/static_server.conf", use_sudo=True)
 
 def sub_start_processes():
     """Starts NginX."""
