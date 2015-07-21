@@ -102,34 +102,6 @@ def sub_install_packages():
 def sub_build_packages():
     """Builds necessary packages."""
     sub_build_nginx()
-    sub_build_s3fs()
-    sub_copy_s3fs_config()
-
-def sub_build_s3fs():
-    """Builds S3FS for mounting AWS S3 on local filesystem."""
-    sudo("mkdir -p /usr/src/s3fs")
-    sudo("""cd /usr/src/s3fs; if [ ! -e v1.79.tar.gz ]; then
-         wget 'https://github.com/s3fs-fuse/s3fs-fuse/archive/v1.79.tar.gz' ; \
-         tar xfz v1.79.tar.gz; \
-         cd s3fs-fuse-1.79; \
-         ./autogen.sh; \
-         ./configure --prefix=/usr --with-openssl; \
-         make; \
-         make install; 
-         fi
-         """)
-    sub_add_s3fs_mountpoint()
-
-def sub_add_s3fs_mountpoint():
-    """Adds an entry to fstab to automatically mount S3 on boot."""
-    if env.settings in ('staging', 'production'):
-        sudo("echo 's3fs#receptormarker /mnt fuse _netdev,use_cache=/tmp,retries=5,allow_other 0 0' >> /etc/fstab")
-     
-def sub_copy_s3fs_config():
-    passwd_file = os.path.join(os.path.dirname(__file__), '..',
-                               'ReceptorMarkerDev', 'passwd-s3fs')
-    put(passwd_file, "/etc/passwd-s3fs", use_sudo=True)
-    sudo("chmod 640 /etc/passwd-s3fs")
 
 def sub_build_nginx():
     """Builds NginX to configure this server as a static media server for Django."""
