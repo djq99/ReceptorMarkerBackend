@@ -25,7 +25,7 @@ geturl <- function(uri) {
   }
   else if (splitpath[1] == 'server' && splitpath[2] == 'env.stage.example.com') {
     # using staging site. return url for staging server.
-    basepath <- 'http://media.receptormarker.com/staging/media/'
+    basepath <- 'http://stagingmedia.receptormarker.com/staging/media/'
     restofpath <- paste(splitpath[6:length(splitpath)], collapse='/')
     url <- paste0(basepath, restofpath)
     return(url)
