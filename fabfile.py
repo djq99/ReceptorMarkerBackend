@@ -290,7 +290,7 @@ def reload():
     # TODO: Duplicated elsewhere
     if env.settings in ('staging', 'production'):
         require('hosts', provided_by=[staging, production])
-        reboot(40)
+        reboot(60)
     else:
         require('hosts', provided_by=[vagrant])
         local('vagrant reload')
